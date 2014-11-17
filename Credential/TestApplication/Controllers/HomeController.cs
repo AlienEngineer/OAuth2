@@ -10,6 +10,11 @@ namespace TestApplication.Controllers
     {
         public ActionResult Index()
         {
+            if (Request.Cookies["Github"] == null)
+            {
+                return Redirect("/github/requestcode");
+            }
+
             return View();
         }
 

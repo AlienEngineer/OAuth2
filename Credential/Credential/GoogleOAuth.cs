@@ -10,9 +10,7 @@ namespace Credential
     {
         public GoogleOAuth(GoogleOAuthContext context): base(context)
         {
-        }
-
-        
+        }        
 
         protected override IEnumerable<KeyValuePair<string, string>> GetBody()
         {
@@ -37,6 +35,8 @@ namespace Credential
             if (context.Scope.OpenId) { builder.Append("+openid"); }
             if (context.Scope.Profile) { builder.Append("+profile"); }
             if (context.Scope.Email) { builder.Append("+email");}
+            if (context.Scope.Tasks) { builder.Append("+https://www.googleapis.com/auth/tasks"); }
+            if (context.Scope.TasksReadOnly) { builder.Append("+https://www.googleapis.com/auth/tasks.readonly"); }
 
             return builder
                 .ToString()

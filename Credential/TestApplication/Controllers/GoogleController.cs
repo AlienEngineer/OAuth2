@@ -26,7 +26,9 @@ namespace TestApplication.Controllers
                 Scope = new GoogleScope
                 {
                     Email = true,
-                    Profile = true
+                    Profile = true,
+                    OpenId = true,
+                    Tasks = true
                 }
             });
         }

@@ -32,19 +32,15 @@ namespace Credential
         
         protected override string StringifyScope(GoogleOAuthContext context)
         {
-            var builder = new StringBuilder("openid");
+            var builder = new StringBuilder();
 
-            if (context.Scope.Profile)
-            {
-                builder.Append(" profile");
-            }
+            if (context.Scope.OpenId) { builder.Append("+openid"); }
+            if (context.Scope.Profile) { builder.Append("+profile"); }
+            if (context.Scope.Email) { builder.Append("+email");}
 
-            if (context.Scope.Email)
-            {
-                builder.Append(" email");
-            }
-
-            return builder.ToString();
+            return builder
+                .ToString()
+                .Substring(1); // Remove initial +
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Credential
 {
@@ -13,16 +12,16 @@ namespace Credential
         /// Redirects the user to the Authentication Server.
         /// </summary>
         /// <returns></returns>
-        RedirectResult Authenticate();
+        Uri MakeAuthorizationServerUri();
 
         /// <summary>
         /// Exchanges the code for authentication tokens.
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="queryString">The query string.</param>
         /// <returns>
         /// The tokens
         /// </returns>
-        Task<Tokens> ExchangeCode(HttpRequestBase request);
+        Task<Tokens> ExchangeCodeAsync(NameValueCollection queryString);
 
     }
 

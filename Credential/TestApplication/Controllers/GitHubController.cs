@@ -21,7 +21,7 @@ namespace TestApplication.Controllers
                 POST = new Uri("https://github.com/login/oauth/access_token"),
                 ClientId = "c47c852759362b832923",
                 ClientSecret = "19828b75a317b4d2ab768bc2372bdd987c9a93df",
-                RedirectUri = "http://localhost:2521/github/receivetokens",
+                RedirectUri = "http://localhost:2521/github/callback",
                 State = "wtf",
                 Scope = new GitHubScope
                 {
@@ -34,12 +34,12 @@ namespace TestApplication.Controllers
 
         public ActionResult RequestCode()
         {
-            return _oAuth2.Authenticate();
+            return Redirect(_oAuth2.MakeAuthorizationServerUri().ToString());
         }
 
-        public async Task<ActionResult> ReceiveTokens()
+        public async Task<ActionResult> Callback()
         {
-            var tokens = await _oAuth2.ExchangeCode(Request);
+            var tokens = await _oAuth2.ExchangeCodeAsync(Request.QueryString);
 
             var cookie = new HttpCookie("Github")
             {

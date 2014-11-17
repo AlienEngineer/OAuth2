@@ -23,9 +23,16 @@ namespace TestApplication.Controllers
         [Route("Logout")]
         public ActionResult Logout()
         {
-            if (Request.Cookies["OAuth"] != null)
+            if (Request.Cookies["Google"] != null)
             {
-                var cookie = new HttpCookie("OAuth")
+                var cookie = new HttpCookie("Google")
+                {
+                    Expires = DateTime.Now.AddDays(-1)
+                };
+
+                Response.Cookies.Add(cookie);
+
+                cookie = new HttpCookie("Github")
                 {
                     Expires = DateTime.Now.AddDays(-1)
                 };

@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
-using Newtonsoft.Json;
-
 namespace Credential
 {
     public abstract class OAuth<TContext> : IOAuth2 where TContext : OAuthContext
@@ -19,11 +17,11 @@ namespace Credential
             _context = context;
         }
 
-        public RedirectResult Authenticate()
+        public Uri MakeAuthorizationServerUri()
         {
             var builder = new UriBuilder(_context.GET);
 
-            var query = HttpUtility.ParseQueryString(builder.Query);
+            var query = new NameValueCollection();
 
             query["client_id"] = _context.ClientId;
             query["redirect_uri"] = _context.RedirectUri;
@@ -32,14 +30,28 @@ namespace Credential
 
             ApiSpecificQueries(query);
 
-            builder.Query = query.ToString();
+            builder.Query = StringifyQuery(query);
 
-            return new RedirectResult(builder.ToString());
+            return new Uri(builder.ToString());
         }
 
-        public async Task<Tokens> ExchangeCode(HttpRequestBase request)
+        private String StringifyQuery(NameValueCollection query)
         {
-            var code = request.QueryString["code"];
+            var sb = new StringBuilder();
+
+            for (int i = 0; i < query.Count; i++)
+            {
+                sb.AppendFormat("&{0}={1}", query.GetKey(i), query.Get(i));
+            }
+
+            return sb
+                .ToString()
+                .Substring(1); // Remove initial &
+        }
+
+        public async Task<Tokens> ExchangeCodeAsync(NameValueCollection queryString)
+        {
+            var code = queryString["code"];
             //var session_state = request.QueryString["session_state"];
             //var state = request.QueryString["state"];
 

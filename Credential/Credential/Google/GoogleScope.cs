@@ -6,5 +6,6 @@ namespace Credential.Google
     {
         public Boolean Profile { get; set; }
         public Boolean Email { get; set; }
+        public Boolean OpenId { get; set; }
     }
 }

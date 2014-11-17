@@ -17,7 +17,7 @@ namespace TestApplication.Filters
 
             if (context.Result is HttpUnauthorizedResult)
             {
-                var cookie = context.RequestContext.HttpContext.Request.Cookies["OAuth"];
+                var cookie = context.RequestContext.HttpContext.Request.Cookies["Google"];
 
                 if (cookie != null)
                 {

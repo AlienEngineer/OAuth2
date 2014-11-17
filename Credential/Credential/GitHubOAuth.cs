@@ -46,28 +46,35 @@ namespace Credential
             var sb = new StringBuilder();
             var scope = context.Scope;
             
-            if (scope.NoScope) { sb.Append(""); }
-            if (scope.User) { sb.Append("user"); }
-            if (scope.Email) { sb.Append("user:email"); }
-            if (scope.Follow) { sb.Append("user:follow"); }
-            if (scope.Public) { sb.Append("public_repo"); }
-            if (scope.Repo) { sb.Append("repo"); }
-            if (scope.Deployment) { sb.Append("repo_deployment"); }
-            if (scope.Status) { sb.Append("repo:status"); }
-            if (scope.Delete) { sb.Append("delete_repo"); }
-            if (scope.Notifications) { sb.Append("notifications"); }
-            if (scope.Gist) { sb.Append("gist"); }
-            if (scope.ReadHooks) { sb.Append("read:repo_hook"); }
-            if (scope.WriteHooks) { sb.Append("write:repo_hook"); }
-            if (scope.AdminHooks) { sb.Append("admin:repo_hook"); }
-            if (scope.ReadOrganizations) { sb.Append("read:org"); }
-            if (scope.WriteOrganizations) { sb.Append("write:org"); }
-            if (scope.AdminOrganizations) { sb.Append("admin:org"); }
-            if (scope.ReadPublicKey) { sb.Append("read:public_key"); }
-            if (scope.WritePublicKey) { sb.Append("write:public_key"); }
-            if (scope.AdminPublicKey) { sb.Append("admin:public_key"); }
+            if (scope.NoScope) { 
+                sb.Append("");
+                return sb.ToString();
+            }
 
-            return sb.ToString();
+
+            if (scope.User) { sb.Append("+user"); }
+            if (scope.Email) { sb.Append("+user:email"); }
+            if (scope.Follow) { sb.Append("+user:follow"); }
+            if (scope.Public) { sb.Append("+public_repo"); }
+            if (scope.Repo) { sb.Append("+repo"); }
+            if (scope.Deployment) { sb.Append("+repo_deployment"); }
+            if (scope.Status) { sb.Append("+repo:status"); }
+            if (scope.Delete) { sb.Append("+delete_repo"); }
+            if (scope.Notifications) { sb.Append("+notifications"); }
+            if (scope.Gist) { sb.Append("+gist"); }
+            if (scope.ReadHooks) { sb.Append("+read:repo_hook"); }
+            if (scope.WriteHooks) { sb.Append("+write:repo_hook"); }
+            if (scope.AdminHooks) { sb.Append("+admin:repo_hook"); }
+            if (scope.ReadOrganizations) { sb.Append("+read:org"); }
+            if (scope.WriteOrganizations) { sb.Append("+write:org"); }
+            if (scope.AdminOrganizations) { sb.Append("+admin:org"); }
+            if (scope.ReadPublicKey) { sb.Append("+read:public_key"); }
+            if (scope.WritePublicKey) { sb.Append("+write:public_key"); }
+            if (scope.AdminPublicKey) { sb.Append("+admin:public_key"); }
+
+            return sb
+                .ToString()
+                .Substring(1); // Remove initial +
         }
 
     }
